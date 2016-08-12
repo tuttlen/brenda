@@ -64,7 +64,7 @@ def push(opts, args, conf):
                 tasklist.append(sf_script)
         else:
             tasklist.append(script)
-
+    tasklist.append('/mnt/brenda/buildrender');
     # possibly randomize the task list
     if opts.randomize:
         random.shuffle(tasklist)
