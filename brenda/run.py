@@ -248,18 +248,19 @@ cd "$B"
     head +="""mkdir ~/.aws & """
     head +="""touch ~/.aws/config && """
     head +="""echo "[default]" > ~/.aws/config && """
-    head +="""echo "region = %s" >> ~/.aws/config & """ % (conf.get("S3_REGION"))
-    head +="""echo "aws_access_key_id = %s" >> ~/.aws/config & """ %(conf.get("AWS_ACCESS_KEY"))
-    head +="""echo "output = json" >> ~/.aws/config & """
-    #head +="""echo "aws_secret_access_key = %s" >> ~/.aws/config & """%(conf.get("AWS_SECRET_KEY"))
+    head +="""echo "region = %s" >> ~/.aws/config && """ % (conf.get("S3_REGION"))
+    head +="""echo "aws_access_key_id = %s" >> ~/.aws/config && """ %(conf.get("AWS_ACCESS_KEY"))
+    head +="""echo "output = json" >> ~/.aws/config && """
+    head +="""echo "aws_secret_access_key = %s" >> ~/.aws/config && """%(conf.get("AWS_SECRET_KEY"))
     #head +="""echo "sudo pip install awscli --ignore-installed six " > buildrender &  """
     #head +="""echo "sudo apt-get update -y" >> buildrender & """
     #head +="""echo "sudo apt-get -y install mencoder"  >> buildrender  & """
-    head +="""echo "aws s3 cp %s render --recursive"  >> buildrender & """ % (conf.get("RENDER_OUTPUT"))
-    head +="""echo "cd render"  >> buildrender  & """
-    head +="""echo "mencoder mf://*.png -mf w=960:h=540:fps=25:type=png -ovc raw -oac copy -o output.avi"  >> buildrender  & """
-    head +="""echo "aws s3 cp output.avi %s/blrender.avi" >> buildrender  & """ % (conf.get("BLENDER_PROJECT")) 
-    head +="chmod 0755 ./buildrender  & \n"
+    head +="""echo "aws s3 cp %s render --recursive"  >> buildrender && """ % (conf.get("RENDER_OUTPUT"))
+    head +="""echo "cd render"  >> buildrender  && """
+    head +="""echo "mencoder mf://*.avi -mf fps=24 -ovc x264 -o output.avi"  >> buildrender  && """
+    # TODO: Add a project name to the config file
+    head +="""echo "aws s3 cp output.avi s3://cantorblenderfiles/blrender.avi" >> buildrender  && """ #% (conf.get("BLENDER_PROJECT")) 
+    head +="chmod 0755 ./buildrender  && \n"
     head += "/usr/local/bin/brenda-node --daemon <<EOF\n"
     tail = "EOF\n"
     keys = [
