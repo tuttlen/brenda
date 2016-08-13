@@ -855,3 +855,9 @@ Finally, if you want to make your AMI public, use the following command
 (requires EC2 command line tools):
 
     $ ec2-modify-image-attribute MY_AMI --launch-permission --add all
+
+NOTES -- AVI Encoding
+---------------------------
+Added a script and a task appended to the render to allow for creating and pushing a rendered animation.
+This is in the beginintg stages. Haven't tested it yet
+
